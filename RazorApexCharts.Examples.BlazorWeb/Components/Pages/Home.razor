@@ -1,4 +1,7 @@
 ﻿@page "/"
+@using RazorApexCharts.Models
+@using RazorApexCharts.Models.DataPoints
+@using RazorApexCharts.Models.Enums
 
 <PageTitle>Home</PageTitle>
 
@@ -6,4 +9,41 @@
 
 Welcome to your new app.
 
-<img src="_content/RazorApexCharts/background.png" />
+<ApexChart Options="@Options"></ApexChart>
+
+@code {
+
+    public required ApexChartOptions<int> Options { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Options = new ApexChartOptions<int>
+        {
+            Chart =
+            {
+                Id = "my-chart",
+                Type = ChartTypes.Line
+            },
+            Series = new List<Series<int>>
+            {
+                new()
+                {
+                    Name = "My Series",
+                    Type = MixedType.Line,
+                    Data = new DataPoint<int>[]
+                    {
+                        new() { Y = 1 },
+                        new() { Y = 2 },
+                        new() { Y = 3 },
+                        new() { Y = 4 },
+                        new() { Y = 5 }
+                    }
+                }
+            },
+            Xaxis =
+            new XAxis {
+                Categories = new []{ "Jan", "Feb", "Mar", "Apr", "May" }
+            }
+        };
+    }
+}

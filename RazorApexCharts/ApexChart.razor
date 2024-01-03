@@ -1,0 +1,22 @@
+@using System.Text.Json
+@using RazorApexCharts.ContentSecurityPolicy
+@using RazorApexCharts.Models
+@using RazorApexCharts.Serialization
+@typeparam TItem
+
+@inject IApexContentSecurityPolicy ContentSecurityPolicy
+
+<div id="@HtmlId"></div>
+
+<script type="module" nonce="@ContentSecurityPolicy.Nonce">
+let options = @((MarkupString)JsonSerializer.Serialize(Options, ApexJsonSerializerOptions.Value))
+let chart = new ApexCharts(document.querySelector("#@HtmlId"), options);
+chart.render();
+</script>
+
+@code {
+    [Parameter]
+    public required ApexChartOptions<TItem> Options { get; set; }
+    
+    public string HtmlId => $"chart-{Options.Chart.Id}";
+}

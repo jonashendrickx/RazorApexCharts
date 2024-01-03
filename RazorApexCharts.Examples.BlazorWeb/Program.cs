@@ -1,9 +1,12 @@
+using RazorApexCharts;
 using RazorApexCharts.Examples.BlazorWeb.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents();
+
+builder.Services.AddRazorApexCharts();
 
 var app = builder.Build();
 
